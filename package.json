@@ -53,6 +53,5 @@
 		"url": "https://github.com/aws-amplify/amplify-js.git"
 	},
 	"author": "Amazon Web Services",
-	"license": "Apache-2.0",
-	"gitHead": "88fa9322e9c3df523ebf52b9924dc46e7a976b53"
+	"license": "Apache-2.0"
 }
