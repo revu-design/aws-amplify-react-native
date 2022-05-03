@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "npm run lint && jest -w 1 --passWithNoTests --coverage --maxWorkers 2 --config jest.config.js",
-		"build": "npm run lint && npm run clean && babel --version && babel src --out-dir dist --extensions \".ts,.tsx,.js,.jsx\" --copy-files",
+		"build": "npm run lint && npm run clean && babel src --out-dir dist --extensions \".ts,.tsx,.js,.jsx\" --copy-files",
 		"watch": "npm run build -- --watch",
 		"build:cjs:watch": "npm run watch",
 		"build:esm:watch": "echo \"ES Modules are not exported in react-native. Use target build:cjs:watch\"",
@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.15.7",
-		"@babel/core": "7.17.0",
+		"@babel/core": "7.15.5",
 		"@babel/preset-env": "7.15.6",
 		"@react-native-picker/picker": "^1.2",
 		"@types/react-native": "^0.62.5",
