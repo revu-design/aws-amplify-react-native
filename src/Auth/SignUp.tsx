@@ -59,6 +59,8 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 		this.state = {};
 		this.signUp = this.signUp.bind(this);
 		this.sortFields = this.sortFields.bind(this);
+		this.needPrefix = this.needPrefix.bind(this);
+		this.signupKey = this.signupKey.bind(this);
 		this.getDefaultDialCode = this.getDefaultDialCode.bind(this);
 		this.checkCustomSignUpFields = this.checkCustomSignUpFields.bind(this);
 		this.header =
@@ -78,7 +80,8 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 
 	isValid() {
 		for (const el of this.signUpFields) {
-			if (el.required && !this.state[el.key]) return false;
+			if (el.type !== 'hidden' && el.required && !this.state[el.key]) return false;
+			if (el.type === 'hidden' && el.required && (el.placeholder?.length ?? 0) == 0) return false;
 		}
 		return true;
 	}
@@ -142,6 +145,22 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 			this.signUpFields = this.defaultSignUpFields;
 		}
 	}
+
+	needPrefix(key) {
+		const field = this.signUpFields.find((e) => e.key === key);
+		if (key.indexOf('custom:') !== 0) {
+			return field.custom;
+		} else if (key.indexOf('custom:') === 0 && field.custom === false) {
+			logger.warn('Custom prefix prepended to key but custom field flag is set to false');
+		}
+		return null;
+	}
+
+	signupKey(key: string) {
+		const newKey = `${this.needPrefix(key) ? 'custom:' : ''}${key}`;
+		return newKey;
+	}
+
 	getDefaultDialCode() {
 		return this.props.signUpConfig &&
 			this.props.signUpConfig.defaultCountryCode &&
@@ -170,23 +189,10 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 		const inputKeys = Object.keys(this.state);
 		const inputVals = Object.values(this.state);
 
-		function signupKey(field: ISignUpField) {
-			if (field.key.indexOf('custom:') !== 0) {
-				if (field.custom) {
-					return field.key;
-				} else {
-					return `custom:${field.key}`;
-				}
-			} else if (field.key.indexOf('custom:') === 0 && field.custom === false) {
-				logger.warn('Custom prefix prepended to key but custom field flag is set to false');
-			}
-			return field.key;
-		}
-
 		inputKeys.forEach((key, index) => {
 			if (!['username', 'password', 'checkedValue'].includes(key)) {
 				if (key !== 'phone_line_number' && key !== 'dial_code' && key !== 'error') {
-					signup_info.attributes[signupKey(key)] = inputVals[index];
+					signup_info.attributes[this.signupKey(key)] = inputVals[index];
 				}
 			}
 		});
@@ -195,7 +201,7 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 		this.signUpFields
 			.filter((field) => field.type === 'hidden')
 			.forEach((field) => {
-				signup_info.attributes[signupKey(field.key)] = field.placeholder;
+				signup_info.attributes[this.signupKey(field.key)] = field.placeholder;
 			});
 
 		let labelCheck = false;
