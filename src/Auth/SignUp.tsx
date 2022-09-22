@@ -242,10 +242,8 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 						{I18n.get(this.header)}
 					</Header>
 					<View style={theme.sectionBody}>
-						{this.signUpFields.map((field) => {
-							if (field.type === 'hidden') {
-								return <></>;
-							} else if (field.key === 'phone_number') {
+						{this.signUpFields.filter((field) => field.type !== 'hidden').map((field) => {
+							if (field.key === 'phone_number') {
 								return (
 									<PhoneField
 										theme={theme}
