@@ -1,6 +1,6 @@
 {
 	"name": "aws-amplify-react-native",
-	"version": "6.0.5",
+	"version": "6.0.6",
 	"description": "AWS Amplify is a JavaScript library for Frontend and mobile developers building cloud-enabled applications.",
 	"main": "dist/index.js",
 	"scripts": {
@@ -12,7 +12,7 @@
 		"generate-docs": "rimraf docs && jsdoc -c ./jsDoc.config.json --readme ../../media/api_reference_home.md ./src -r  -d ./docs",
 		"format": "echo \"Not implemented\"",
 		"clean": "rimraf dist",
-		"lint": "eslint src"
+		"lint": "eslint src --fix"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.15.7",
@@ -36,12 +36,14 @@
 		"eslint-plugin-react-hooks": "^4.2.0",
 		"metro-react-native-babel-preset": "^0.66.2",
 		"prettier": "2.4.1",
-		"react": "^16.0.0",
-		"react-test-renderer": "^17.0.2",
+		"react": "^17.0.0",
+		"react-native": "~0.68",
+		"react-test-renderer": "^17.0.0",
 		"rimraf": "^2.6.2"
 	},
 	"dependencies": {
 		"buffer": "^5.2.1",
+		"jest": "^29.2.2",
 		"typescript": "^4.8.3"
 	},
 	"peerDependencies": {
