@@ -108,6 +108,7 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 								placeholder={I18n.get('Enter your password')}
 								secureTextEntry={true}
 								required={true}
+								value={this.state.password}
 								{...setTestId(TEST_ID.AUTH.PASSWORD_INPUT)}
 							/>
 							<AmplifyButton
