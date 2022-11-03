@@ -80,7 +80,7 @@ export default class AuthPiece<
 	}
 
 	renderUsernameField(theme: AmplifyThemeType) {
-		const value = this.getUsernameFromInput();
+		const value = this.getUsernameFromInput() ?? "";
 		const { usernameAttributes = [] } = this.props;
 		if (usernameAttributes === 'email') {
 			return (
