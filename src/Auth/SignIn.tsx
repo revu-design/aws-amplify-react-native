@@ -43,8 +43,8 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 
 		this._validAuthStates = ['signIn', 'signedOut', 'signedUp'];
 		this.state = {
-			username: null,
-			password: null,
+			username: "",
+			password: "",
 			error: null,
 			hasPendingSignIn: false,
 		};
