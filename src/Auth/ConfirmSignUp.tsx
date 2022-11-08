@@ -107,10 +107,10 @@ export default class ConfirmSignUp extends AuthPiece<IConfirmSignUpProps, IConfi
 							</LinkCell>
 							<LinkCell
 								theme={theme}
-								onPress={() => this.changeState('signIn')}
-								testID={TEST_ID.AUTH.BACK_TO_SIGN_IN_BUTTON}
+								onPress={() => this.changeState('signUp')}
+								testID={TEST_ID.AUTH.BACK_TO_SIGN_UP_BUTTON}
 							>
-								{I18n.get('Back to Sign In')}
+								{I18n.get('Back to Sign Up')}
 							</LinkCell>
 						</View>
 						<ErrorRow theme={theme}>{this.state.error}</ErrorRow>
