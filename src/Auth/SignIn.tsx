@@ -31,7 +31,15 @@ import { setTestId } from '../Utils';
 
 const logger = new Logger('SignIn');
 
-interface ISignInProps extends IAuthPieceProps {}
+
+interface ISignInConfig {
+	preButtonElements?: JSX.Element;
+	postButtonElements?: JSX.Element;
+}
+
+interface ISignInProps extends IAuthPieceProps {
+	signInConfig?: ISignInConfig;
+}
 
 interface ISignInState extends IAuthPieceState {
 	password?: string;
@@ -118,6 +126,7 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 								value={this.state.password}
 								{...setTestId(TEST_ID.AUTH.PASSWORD_INPUT)}
 							/>
+							{this.props.signInConfig.preButtonElements}
 							<AmplifyButton
 								text={I18n.get('Sign In').toUpperCase()}
 								theme={theme}
@@ -128,6 +137,8 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 								}
 								{...setTestId(TEST_ID.AUTH.SIGN_IN_BUTTON)}
 							/>
+							{this.props.signInConfig.postButtonElements}
+
 						</View>
 						<View style={theme.sectionFooter}>
 							<LinkCell
