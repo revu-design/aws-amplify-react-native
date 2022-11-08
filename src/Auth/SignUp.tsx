@@ -16,7 +16,7 @@ import { ScrollView, View } from 'react-native';
 
 import { ISignUpField } from '../../types';
 import TEST_ID from '../AmplifyTestIDs';
-import { AmplifyButton, ErrorRow, FormField, Header, LinkCell, PhoneField, SignedOutMessage, Wrapper } from '../AmplifyUI';
+import { AmplifyButton, ErrorRow, FormField, Header, Subheader, LinkCell, PhoneField, SignedOutMessage, Wrapper } from '../AmplifyUI';
 import countryDialCodes from '../CountryDialCodes';
 import { setTestId } from '../Utils';
 import AuthPiece, { IAuthPieceProps, IAuthPieceState } from './AuthPiece';
@@ -241,6 +241,12 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 					<Header theme={theme} testID={TEST_ID.AUTH.SIGN_UP_TEXT}>
 						{I18n.get(this.header)}
 					</Header>
+					<Subheader
+							theme={theme}
+							testID={TEST_ID.AUTH.SIGN_IN_TO_YOUR_ACCOUNT_TEXT}
+						>
+							{I18n.get('Sign up subheader')}
+					</Subheader>					
 					<View style={theme.sectionBody}>
 						{this.signUpFields.filter((field) => field.type !== 'hidden').map((field) => {
 							if (field.key === 'phone_number') {
