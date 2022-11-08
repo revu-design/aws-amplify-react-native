@@ -128,7 +128,7 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 							/>
 							{this.props.signInConfig.preButtonElements}
 							<AmplifyButton
-								text={I18n.get('Sign In').toUpperCase()}
+								text={I18n.get('Sign In')}
 								theme={theme}
 								onPress={this.signIn}
 								disabled={
