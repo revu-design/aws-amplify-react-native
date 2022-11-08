@@ -284,7 +284,7 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 								);
 							}
 						})}
-						{this.props.signUpConfig.preButtonElements}
+						{this.props.signUpConfig?.preButtonElements}
 						<AmplifyButton
 							text={I18n.get('Sign Up Button')}
 							theme={theme}
@@ -292,7 +292,7 @@ export default class SignUp extends AuthPiece<ISignUpProps, ISignUpState> {
 							disabled={!this.isValid()}
 							{...setTestId(TEST_ID.AUTH.SIGN_UP_BUTTON)}
 						/>
-						{this.props.signUpConfig.postButtonElements}
+						{this.props.signUpConfig?.postButtonElements}
 					</View>
 					<View style={theme.sectionFooter}>
 						<LinkCell theme={theme} onPress={() => this.changeState('signIn')} testID={TEST_ID.AUTH.SIGN_IN_BUTTON}>
