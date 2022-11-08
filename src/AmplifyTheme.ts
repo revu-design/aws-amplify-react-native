@@ -23,6 +23,7 @@ export const textInputColor = '#000000';
 export const textInputBorderColor = '#C4C4C4';
 export const placeholderColor = '#C7C7CD';
 export const buttonColor = '#ff9900';
+export const secondaryButtonColor = '#000000';
 export const disabledButtonColor = '#ff990080';
 
 // Theme
@@ -114,12 +115,22 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		padding: 16,
 	},
+	buttonSecondary: {
+		backgroundColor: secondaryButtonColor,
+		alignItems: 'center',
+		padding: 16,
+	},	
 	buttonDisabled: {
 		backgroundColor: disabledButtonColor,
 		alignItems: 'center',
 		padding: 16,
 	},
 	buttonText: {
+		color: '#fff',
+		fontSize: 14,
+		fontWeight: '600',
+	},
+	secondaryButtonText: {
 		color: '#fff',
 		fontSize: 14,
 		fontWeight: '600',

@@ -219,6 +219,7 @@ interface IAmplifyButtonProps extends TouchableOpacityProps {
 	style?: object;
 	text: string;
 	theme?: AmplifyThemeType;
+	secondary?: boolean;
 }
 
 export const AmplifyButton: FC<IAmplifyButtonProps> = (props) => {
@@ -226,6 +227,8 @@ export const AmplifyButton: FC<IAmplifyButtonProps> = (props) => {
 	let style = theme.button;
 	if (props.disabled) {
 		style = theme.buttonDisabled;
+	} else if(props.secondary) {
+		style = theme.buttonSecondary;
 	}
 
 	if (props.style) {
@@ -234,7 +237,7 @@ export const AmplifyButton: FC<IAmplifyButtonProps> = (props) => {
 
 	return (
 		<TouchableOpacity {...props} style={style}>
-			<Text style={theme.buttonText}>{props.text}</Text>
+			<Text style={props.secondary ? theme.secondaryButtonText : theme.buttonText}>{props.text}</Text>
 		</TouchableOpacity>
 	);
 };

@@ -35,6 +35,7 @@ const logger = new Logger('SignIn');
 interface ISignInConfig {
 	preButtonElements?: JSX.Element;
 	postButtonElements?: JSX.Element;
+	makeSignupAButton?: boolean;
 }
 
 interface ISignInProps extends IAuthPieceProps {
@@ -148,13 +149,21 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 							>
 								{I18n.get('Forgot Password')}
 							</LinkCell>
-							<LinkCell
+							{ this.props.signInConfig.makeSignupAButton ?
+								<AmplifyButton
+								secondary={true}
+								text={I18n.get('Sign Up')}
 								theme={theme}
 								onPress={() => this.changeState('signUp')}
-								testID={TEST_ID.AUTH.SIGN_UP_BUTTON}
-							>
-								{I18n.get('Sign Up')}
-							</LinkCell>
+								{...setTestId(TEST_ID.AUTH.SIGN_UP_BUTTON)}/> : 
+								<LinkCell
+									theme={theme}
+									onPress={() => this.changeState('signUp')}
+									testID={TEST_ID.AUTH.SIGN_UP_BUTTON}
+	>								{I18n.get('Sign Up')}
+								</LinkCell>
+							}
+
 						</View>
 						<ErrorRow theme={theme}>{this.state.error}</ErrorRow>
 					</View>
