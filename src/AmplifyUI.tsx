@@ -54,7 +54,7 @@ export const FormField: FC<IFormFieldProps> = (props) => {
 	return (
 		<View style={theme.formField}>
 			<Text style={theme.inputLabel}>
-				{props.label} {props.required ? '*' : ''}
+				{props.label}
 			</Text>
 			<TextInput
 				style={theme.input}
