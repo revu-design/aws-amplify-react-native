@@ -186,6 +186,17 @@ export const Header: FC<IHeaderProps> = (props) => {
 	);
 };
 
+export const Subheader: FC<IHeaderProps> = (props) => {
+	const theme = props.theme || AmplifyTheme;
+	return (
+		<View style={theme.sectionSubheader}>
+			<Text style={theme.sectionSubheaderText} {...setTestId(props.testID)}>
+				{props.children}
+			</Text>
+		</View>
+	);
+};
+
 interface IErrorRowProps {
 	theme?: AmplifyThemeType;
 }

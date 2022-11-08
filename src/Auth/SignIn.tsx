@@ -20,6 +20,7 @@ import {
 	FormField,
 	LinkCell,
 	Header,
+	Subheader,
 	ErrorRow,
 	SignedOutMessage,
 	Wrapper,
@@ -99,6 +100,12 @@ export default class SignIn extends AuthPiece<ISignInProps, ISignInState> {
 						>
 							{I18n.get('Sign in to your account')}
 						</Header>
+						<Subheader
+							theme={theme}
+							testID={TEST_ID.AUTH.SIGN_IN_TO_YOUR_ACCOUNT_TEXT}
+						>
+							{I18n.get('Sign in to your account subheader')}
+						</Subheader>
 						<View style={theme.sectionBody}>
 							{this.renderUsernameField(theme)}
 							<FormField
