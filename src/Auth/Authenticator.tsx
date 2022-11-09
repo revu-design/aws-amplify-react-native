@@ -11,7 +11,7 @@
  * and limitations under the License.
  */
 
-import React, { FC, ReactNode, useEffect } from 'react';
+import React, { FC, ReactNode} from 'react';
 import { Auth, Analytics, Logger, Hub, JS } from 'aws-amplify';
 import AmplifyTheme, { AmplifyThemeType } from '../AmplifyTheme';
 import AmplifyMessageMap from '../AmplifyMessageMap';
@@ -73,12 +73,12 @@ interface IAuthenticatorState {
 }
 
 export default class Authenticator extends React.Component<IAuthenticatorProps, IAuthenticatorState> {
-	_initialAuthState: string;
+	_knownPropAuthState: string;
 	_isMounted: boolean;
 
 	constructor(props: IAuthenticatorProps) {
 		super(props);
-		this._initialAuthState = this.props.authState || 'signIn';
+		this._knownPropAuthState = this.props.authState || 'signIn';
 		this.state = {
 			authState: props.authState || 'loading',
 			authData: props.authData,
@@ -123,7 +123,7 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 
 		logger.info('Inside handleStateChange method current authState:', this.state.authState);
 
-		const nextAuthState = state === 'signedOut' ? this._initialAuthState : state;
+		const nextAuthState = state === 'signedOut' ? this._knownPropAuthState : state;
 		const nextAuthData = data !== undefined ? data : this.state.authData;
 
 		if (this._isMounted) {
@@ -179,7 +179,7 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 					this.checkContact(user);
 				} else {
 					if (statesJumpToSignIn.includes(authState)) {
-						this.handleStateChange(this._initialAuthState, null);
+						this.handleStateChange(this._knownPropAuthState, null);
 					}
 				}
 			})
@@ -189,7 +189,7 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 				if (statesJumpToSignIn.includes(authState)) {
 					Auth.signOut()
 						.then(() => {
-							this.handleStateChange(this._initialAuthState, null);
+							this.handleStateChange(this._knownPropAuthState, null);
 						})
 						.catch((err) => logger.warn('Failed to sign out', err));
 				}
@@ -199,11 +199,10 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 	render() {
 		const { authState, authData } = this.state;
 		/* change state if required */
-		useEffect(() => {
-			if(authState != this.props.authState) {
-				this.handleStateChange(this.props.authState);
-			}
-		}, [this.props.authState]);
+		if(this.props.authState != this._knownPropAuthState && authState != this.props.authState) {
+			this._knownPropAuthState = this.props.authState;
+			this.handleStateChange(this.props.authState);
+		}
 
 		const theme = this.props.theme || AmplifyTheme;
 		const messageMap = this.props.errorMessage || AmplifyMessageMap;
