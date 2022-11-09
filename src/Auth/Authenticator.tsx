@@ -11,7 +11,7 @@
  * and limitations under the License.
  */
 
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect } from 'react';
 import { Auth, Analytics, Logger, Hub, JS } from 'aws-amplify';
 import AmplifyTheme, { AmplifyThemeType } from '../AmplifyTheme';
 import AmplifyMessageMap from '../AmplifyMessageMap';
@@ -198,6 +198,13 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 
 	render() {
 		const { authState, authData } = this.state;
+		/* change state if required */
+		useEffect(() => {
+			if(authState != this.props.authState) {
+				this.handleStateChange(this.props.authState);
+			}
+		}, [this.props.authState]);
+
 		const theme = this.props.theme || AmplifyTheme;
 		const messageMap = this.props.errorMessage || AmplifyMessageMap;
 		// If container prop is undefined, default to AWS Amplify UI Container (SafeAreaView)
