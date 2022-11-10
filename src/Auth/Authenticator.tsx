@@ -73,6 +73,7 @@ interface IAuthenticatorState {
 }
 
 export default class Authenticator extends React.Component<IAuthenticatorProps, IAuthenticatorState> {
+	_initAuthState: string;
 	_knownPropAuthState: string;
 	_isMounted: boolean;
 
@@ -197,13 +198,13 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 	}
 
 	render() {
-		var { authState, authData } = this.state;
 		/* change state if required */
-		if(this.props.authState != this._knownPropAuthState && authState != this.props.authState) {
+		if(this.props.authState != this._knownPropAuthState && this.state.authState != this.props.authState) {
 			this._knownPropAuthState = this.props.authState;
 			this.handleStateChange(this.props.authState);
-			authState = this.props.authState;
 		}
+
+		const { authState, authData } = this.state;
 
 		const theme = this.props.theme || AmplifyTheme;
 		const messageMap = this.props.errorMessage || AmplifyMessageMap;
