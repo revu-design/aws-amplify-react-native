@@ -70,19 +70,20 @@ interface IAuthenticatorState {
 	authData?: any;
 	authState: string;
 	error?: string;
+	knownSetAuthState?: string;
 }
 
 export default class Authenticator extends React.Component<IAuthenticatorProps, IAuthenticatorState> {
 	_initAuthState: string;
-	_knownPropAuthState: string;
 	_isMounted: boolean;
 
 	constructor(props: IAuthenticatorProps) {
 		super(props);
-		this._knownPropAuthState = this.props.authState || 'signIn';
+		this._initAuthState = this.props.authState || 'signIn';
 		this.state = {
 			authState: props.authState || 'loading',
 			authData: props.authData,
+			knownSetAuthState: props.authState
 		};
 
 		this.handleStateChange = this.handleStateChange.bind(this);
@@ -124,7 +125,7 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 
 		logger.info('Inside handleStateChange method current authState:', this.state.authState);
 
-		const nextAuthState = state === 'signedOut' ? this._knownPropAuthState : state;
+		const nextAuthState = state === 'signedOut' ? this.state.knownSetAuthState : state;
 		const nextAuthData = data !== undefined ? data : this.state.authData;
 
 		if (this._isMounted) {
@@ -180,7 +181,7 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 					this.checkContact(user);
 				} else {
 					if (statesJumpToSignIn.includes(authState)) {
-						this.handleStateChange(this._knownPropAuthState, null);
+						this.handleStateChange(this.state.knownSetAuthState, null);
 					}
 				}
 			})
@@ -190,19 +191,22 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 				if (statesJumpToSignIn.includes(authState)) {
 					Auth.signOut()
 						.then(() => {
-							this.handleStateChange(this._knownPropAuthState, null);
+							this.handleStateChange(this.state.knownSetAuthState, null);
 						})
 						.catch((err) => logger.warn('Failed to sign out', err));
 				}
 			});
 	}
 
-	getDerivedStateFromProps() {
+	static getDerivedStateFromProps(props, state) {
 		/* change state if required */
-		if(this.props.authState != this._knownPropAuthState && this.state.authState != this.props.authState) {
-			this.handleStateChange(this.props.authState);
+		if(props.authState != state.knownSetAuthState) {
+			return {
+				knownSetAuthState: props.authState,
+				authState: props.authState
+			};
 		}
-		this._knownPropAuthState = this.props.authState;
+		return state;
 	}
 
 	render() {
