@@ -197,13 +197,15 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 			});
 	}
 
-	render() {
+	getDerivedStateFromProps() {
 		/* change state if required */
 		if(this.props.authState != this._knownPropAuthState && this.state.authState != this.props.authState) {
 			this.handleStateChange(this.props.authState);
 		}
 		this._knownPropAuthState = this.props.authState;
+	}
 
+	render() {
 		const { authState, authData } = this.state;
 
 		const theme = this.props.theme || AmplifyTheme;
