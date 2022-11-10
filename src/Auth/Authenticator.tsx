@@ -200,9 +200,9 @@ export default class Authenticator extends React.Component<IAuthenticatorProps, 
 	render() {
 		/* change state if required */
 		if(this.props.authState != this._knownPropAuthState && this.state.authState != this.props.authState) {
-			this._knownPropAuthState = this.props.authState;
 			this.handleStateChange(this.props.authState);
 		}
+		this._knownPropAuthState = this.props.authState;
 
 		const { authState, authData } = this.state;
 
